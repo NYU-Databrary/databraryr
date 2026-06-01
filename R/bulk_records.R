@@ -8,9 +8,8 @@ NULL
 #' @description Create many records sequentially via
 #' \code{\link{create_volume_record}}. The resolved name metric is set from
 #' each \code{record_names} entry automatically. \code{record_names} must be
-#' unique (for \code{\link{resume_bulk}}). \code{category_id}, \code{measures},
-#' and \code{participant} may each be length 1 (recycled to every row) or match
-#' \code{length(record_names)}.
+#' unique (for \code{\link{resume_bulk}}). \code{category_id} and \code{measures}
+#' may each be length 1 (recycled to every row) or match \code{length(record_names)}.
 #'
 #' @param vol_id Target volume number. Must be a positive integer.
 #' @param record_names Non-empty character vector of record display names (trimmed).
@@ -18,9 +17,6 @@ NULL
 #' @param measures Optional named list of additional metric values (recycled when
 #'   length 1), or a list-of-lists with one element per \code{record_names} entry.
 #'   See \code{\link{create_volume_record}} for value types.
-#' @param participant Optional participant data (recycled when length 1), or a
-#'   list with one element per \code{record_names} entry. See
-#'   \code{\link{create_volume_record}}.
 #' @param rq An \code{httr2} request object. Defaults to \code{NULL}.
 #' @param on_error \code{"stop"} or \code{"collect"}; see \code{\link{bulk_upload_files}}.
 #' @param max_retries Non-negative integer; extra attempts per input after the first failure.
@@ -29,10 +25,9 @@ NULL
 #' @return A \code{tibble} as documented in \code{\link{bulk_upload_files}};
 #'   \code{input} is each trimmed record name.
 #'
-#' @details With \code{\link{resume_bulk}}, pass \code{measures} and
-#'   \code{participant} aligned to the subset of \code{record_names} being
-#'   retried (same order as incomplete rows), analogous to \code{new_names} in
-#'   \code{\link{bulk_rename_sessions}}.
+#' @details With \code{\link{resume_bulk}}, pass \code{measures} aligned to the
+#'   subset of \code{record_names} being retried (same order as incomplete rows),
+#'   analogous to \code{new_names} in \code{\link{bulk_rename_sessions}}.
 #'
 #' @seealso \code{\link{create_volume_record}}, \code{\link{resume_bulk}}
 #'
@@ -60,7 +55,6 @@ bulk_create_records <- function(
   record_names,
   category_id,
   measures = NULL,
-  participant = NULL,
   vb = options::opt("vb"),
   rq = NULL,
   on_error = c("stop", "collect"),
@@ -85,11 +79,6 @@ bulk_create_records <- function(
   }
   assert_recyclable(measures, n, "measures")
 
-  if (!is.null(participant)) {
-    assertthat::assert_that(is.list(participant))
-  }
-  assert_recyclable(participant, n, "participant")
-
   assert_positive_integer(vol_id, "vol_id")
   assertthat::assert_that(is.logical(vb), length(vb) == 1)
   assertthat::assert_that(is.null(rq) || inherits(rq, "httr2_request"))
@@ -107,7 +96,6 @@ bulk_create_records <- function(
         category_id = recycle_i(category_id, i),
         name = nm,
         measures = row_measures,
-        participant = recycle_bulk_list_arg(participant, i),
         vb = vb,
         rq = rq
       )

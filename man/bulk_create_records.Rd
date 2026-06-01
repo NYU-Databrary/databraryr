@@ -9,7 +9,6 @@ bulk_create_records(
   record_names,
   category_id,
   measures = NULL,
-  participant = NULL,
   vb = options::opt("vb"),
   rq = NULL,
   on_error = c("stop", "collect"),
@@ -27,10 +26,6 @@ bulk_create_records(
 \item{measures}{Optional named list of additional metric values (recycled when
 length 1), or a list-of-lists with one element per \code{record_names} entry.
 See \code{\link{create_volume_record}} for value types.}
-
-\item{participant}{Optional participant data (recycled when length 1), or a
-list with one element per \code{record_names} entry. See
-\code{\link{create_volume_record}}.}
 
 \item{vb}{Show verbose messages. (Defaults to \code{FALSE}, overwritable using option 'databraryr.vb' or environment variable 'R_DATABRARYR_VB')}
 
@@ -50,15 +45,13 @@ A \code{tibble} as documented in \code{\link{bulk_upload_files}};
 Create many records sequentially via
 \code{\link{create_volume_record}}. The resolved name metric is set from
 each \code{record_names} entry automatically. \code{record_names} must be
-unique (for \code{\link{resume_bulk}}). \code{category_id}, \code{measures},
-and \code{participant} may each be length 1 (recycled to every row) or match
-\code{length(record_names)}.
+unique (for \code{\link{resume_bulk}}). \code{category_id} and \code{measures}
+may each be length 1 (recycled to every row) or match \code{length(record_names)}.
 }
 \details{
-With \code{\link{resume_bulk}}, pass \code{measures} and
-\code{participant} aligned to the subset of \code{record_names} being
-retried (same order as incomplete rows), analogous to \code{new_names} in
-\code{\link{bulk_rename_sessions}}.
+With \code{\link{resume_bulk}}, pass \code{measures} aligned to the
+subset of \code{record_names} being retried (same order as incomplete rows),
+analogous to \code{new_names} in \code{\link{bulk_rename_sessions}}.
 }
 \examples{
 \donttest{

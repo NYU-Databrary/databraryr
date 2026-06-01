@@ -156,9 +156,9 @@ recycle_i <- function(x, i) {
   }
 }
 
-# Internal: recycle list-valued bulk arguments (e.g. measures, participant).
+# Internal: recycle list-valued bulk arguments (e.g. measures).
 # Unlike recycle_i(), length-1 lists are returned whole so a single
-# named measures map or participant object applies to every row.
+# named measures map applies to every row.
 #' @noRd
 recycle_bulk_list_arg <- function(x, i) {
   if (is.null(x)) {

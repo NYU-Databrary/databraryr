@@ -18,22 +18,7 @@ test_that("bulk_create_records rejects invalid args", {
     vol_id = 1,
     record_names = c("a", "b"),
     category_id = TEST_CATEGORY_ID,
-    participant = rep(
-      list(list(birthday = list(year = 2020, month = 1, day = 1))),
-      3L
-    )
-  ))
-  expect_error(bulk_create_records(
-    vol_id = 1,
-    record_names = c("a", "b"),
-    category_id = TEST_CATEGORY_ID,
     measures = "not a list"
-  ))
-  expect_error(bulk_create_records(
-    vol_id = 1,
-    record_names = c("a", "b"),
-    category_id = TEST_CATEGORY_ID,
-    participant = "not a list"
   ))
 })
 
@@ -167,51 +152,4 @@ test_that("bulk_create_records applies per-row measures", {
     }
   }, character(1))
   expect_setequal(extra_vals, c(val1, val2))
-})
-
-test_that("bulk_create_records applies per-row participant data", {
-  uniq <- sprintf(
-    "bulk_cr_part_%s_%s",
-    as.integer(Sys.time()),
-    paste(sample(letters, 6, replace = TRUE), collapse = "")
-  )
-  names_vec <- c(sprintf("%s_1", uniq), sprintf("%s_2", uniq))
-
-  result <- bulk_create_records(
-    vol_id = TEST_VOL_ID,
-    record_names = names_vec,
-    category_id = 1L,
-    participant = list(
-      list(birthday = list(year = 2020, month = 1, day = 1)),
-      list(birthday = list(year = 2019, month = 5, day = 10))
-    ),
-    vb = FALSE
-  )
-  skip_if_null_response(result, "bulk_create_records with per-row participant")
-
-  expect_true(all(result$status == "success"))
-
-  ids <- vapply(result$result, function(r) {
-    if (is.null(r) || is.null(r$record_id)) NA_real_ else as.numeric(r$record_id)
-  }, numeric(1))
-  on.exit({
-    for (id in ids) {
-      if (!is.na(id)) {
-        try(
-          delete_volume_record(vol_id = TEST_VOL_ID, record_id = as.integer(id), vb = FALSE),
-          silent = TRUE
-        )
-      }
-    }
-  }, add = TRUE)
-
-  birthdays <- vapply(result$result, function(r) {
-    if (is.null(r) || is.null(r$birthday) || is.null(r$birthday$value)) {
-      NA_character_
-    } else {
-      val <- r$birthday$value
-      sprintf("%04d-%02d-%02d", val$year, val$month, val$day)
-    }
-  }, character(1))
-  expect_setequal(birthdays, c("2020-01-01", "2019-05-10"))
 })
