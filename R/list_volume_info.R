@@ -39,7 +39,7 @@ list_volume_info <-
 
     volume <- databraryr::get_volume_by_id(vol_id = vol_id, vb = vb, rq = rq)
     if (is.null(volume)) {
-      return(NULL)
+      NULL
     } else {
       if (vb) message("Summarising volume detail...")
 
