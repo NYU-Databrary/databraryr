@@ -19,7 +19,7 @@ URL: https://databrary.github.io/databraryr/,
     https://github.com/databrary/databraryr
 BugReports: https://github.com/databrary/databraryr/issues
 Depends:
-    R (>= 4.3.2)
+    R (>= 4.3.0)
 Imports:
     assertthat (>= 0.2.1),
     dplyr (>= 1.1.4),
@@ -28,7 +28,6 @@ Imports:
     keyring (>= 1.4.1),
     lifecycle (>= 1.0.4),
     magrittr (>= 2.0.0),
-    methods,
     openssl (>= 2.0.0),
     options (>= 0.3.1),
     purrr (>= 1.1.0),
