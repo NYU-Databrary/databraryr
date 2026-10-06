@@ -5,6 +5,8 @@
 
 # databraryr <a href="https://databrary.github.io/databraryr/"><img src="man/figures/logo.png" align="right" height="138" /></a>
 
+> **This repository has moved.** The canonical project is [databrary/databraryr](https://github.com/databrary/databraryr). Use that remote for new work. This NYU-Databrary copy is no longer the source of truth.
+
 <!-- badges: start -->
 
 [![CRAN status](https://www.r-pkg.org/badges/version/databraryr)](https://CRAN.R-project.org/package=databraryr)
