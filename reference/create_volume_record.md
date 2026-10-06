@@ -14,7 +14,6 @@ create_volume_record(
   category_id,
   name,
   measures = list(),
-  participant = NULL,
   vb = options::opt("vb"),
   rq = NULL
 )
@@ -42,12 +41,6 @@ create_volume_record(
   values. Values can be strings (for text metrics), numbers (for numeric
   metrics), or lists with `year`, `month`, `day`, optional `month` and
   `day` fields (for date metrics).
-
-- participant:
-
-  Optional list for participant records containing `birthday` (with
-  `year`, `month`, `day` fields) or `age` (with `years`, `months`,
-  `days` fields). Cannot provide both `birthday` and `age`.
 
 - vb:
 
@@ -84,14 +77,12 @@ create_volume_record(
   measures = list("30" = "Extra value")
 )
 
-# Create a participant record with name and birthday
+# Create a participant record with name and birthdate measure
 create_volume_record(
   vol_id = 1,
   category_id = 1,
   name = "P001",
-  participant = list(
-    birthday = list(year = 2020, month = 3, day = 15)
-  )
+  measures = list("4" = list(year = 2020, month = 3, day = 15))
 )
 } # }
 # }

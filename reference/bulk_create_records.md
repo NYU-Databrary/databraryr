@@ -1,14 +1,12 @@
 # Bulk Create Records in a Databrary Volume
 
 Create many records sequentially via
-[`create_volume_record`](https://databrary.github.io/databraryr/reference/create_volume_record.md)
-with empty `measures` aside from the resolved name metric.
-`record_names` must be unique (for
+[`create_volume_record`](https://databrary.github.io/databraryr/reference/create_volume_record.md).
+The resolved name metric is set from each `record_names` entry
+automatically. `record_names` must be unique (for
 [`resume_bulk`](https://databrary.github.io/databraryr/reference/resume_bulk.md)).
-`category_id` may be length 1 or match `record_names`. Per-row
-`measures` / `participant` are not supported; call
-[`create_volume_record`](https://databrary.github.io/databraryr/reference/create_volume_record.md)
-for those cases.
+`category_id` and `measures` may each be length 1 (recycled to every
+row) or match `length(record_names)`.
 
 ## Usage
 
@@ -17,6 +15,7 @@ bulk_create_records(
   vol_id = 1,
   record_names,
   category_id,
+  measures = NULL,
   vb = options::opt("vb"),
   rq = NULL,
   on_error = c("stop", "collect"),
@@ -38,6 +37,13 @@ bulk_create_records(
 - category_id:
 
   Numeric category id(s); length 1 or `length(record_names)`.
+
+- measures:
+
+  Optional named list of additional metric values (recycled when length
+  1), or a list-of-lists with one element per `record_names` entry. See
+  [`create_volume_record`](https://databrary.github.io/databraryr/reference/create_volume_record.md)
+  for value types.
 
 - vb:
 
@@ -68,6 +74,14 @@ A `tibble` as documented in
 [`bulk_upload_files`](https://databrary.github.io/databraryr/reference/bulk_upload_files.md);
 `input` is each trimmed record name.
 
+## Details
+
+With
+[`resume_bulk`](https://databrary.github.io/databraryr/reference/resume_bulk.md),
+pass `measures` aligned to the subset of `record_names` being retried
+(same order as incomplete rows), analogous to `new_names` in
+[`bulk_rename_sessions`](https://databrary.github.io/databraryr/reference/bulk_rename_sessions.md).
+
 ## See also
 
 [`create_volume_record`](https://databrary.github.io/databraryr/reference/create_volume_record.md),
@@ -82,6 +96,13 @@ bulk_create_records(
   vol_id = 1,
   record_names = c("P101", "P102"),
   category_id = 6
+)
+
+bulk_create_records(
+  vol_id = 1,
+  record_names = c("P101", "P102"),
+  category_id = 6,
+  measures = list("30" = "Control")
 )
 } # }
 # }

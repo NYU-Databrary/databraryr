@@ -17,7 +17,6 @@ update_volume_record(
   vol_id = 1,
   record_id,
   measures = NULL,
-  participant = NULL,
   vb = options::opt("vb"),
   rq = NULL
 )
@@ -44,16 +43,6 @@ update_volume_record(
   or
   [`get_volume_record_by_id`](https://databrary.github.io/databraryr/reference/get_volume_record_by_id.md)
   to discover ids and current values).
-
-- participant:
-
-  Optional list for participant records containing `birthday` (with
-  `year`, `month`, `day` fields) or `age` (with `years`, `months`,
-  `days` fields). Sending only `participant` without a complete
-  `measures` map may still fail validation for categories with required
-  metrics; include required measures or use
-  [`set_record_measure`](https://databrary.github.io/databraryr/reference/set_record_measure.md)
-  for targeted edits.
 
 - vb:
 

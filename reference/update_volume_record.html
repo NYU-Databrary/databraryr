@@ -69,7 +69,6 @@ assembling the full required set, use <code><a href="set_record_measure.html">se
 <span>  vol_id <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  <span class="va">record_id</span>,</span>
 <span>  measures <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  participant <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  vb <span class="op">=</span> <span class="fu">options</span><span class="fu">::</span><span class="fu"><a href="https://dgkf.github.io/options/reference/opt.html" class="external-link">opt</a></span><span class="op">(</span><span class="st">"vb"</span><span class="op">)</span>,</span>
 <span>  rq <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -94,15 +93,6 @@ or lists with <code>year</code> and optional <code>month</code>, <code>day</code
 fields (for date metrics). When supplied, must include all required metrics
 for the record's category (use <code><a href="get_volume_enabled_categories.html">get_volume_enabled_categories</a></code>
 or <code><a href="get_volume_record_by_id.html">get_volume_record_by_id</a></code> to discover ids and current values).</p></dd>
-
-
-<dt id="arg-participant">participant<a class="anchor" aria-label="anchor" href="#arg-participant"></a></dt>
-<dd><p>Optional list for participant records containing
-<code>birthday</code> (with <code>year</code>, <code>month</code>, <code>day</code> fields) or
-<code>age</code> (with <code>years</code>, <code>months</code>, <code>days</code> fields). Sending
-only <code>participant</code> without a complete <code>measures</code> map may still
-fail validation for categories with required metrics; include required
-measures or use <code><a href="set_record_measure.html">set_record_measure</a></code> for targeted edits.</p></dd>
 
 
 <dt id="arg-vb">vb<a class="anchor" aria-label="anchor" href="#arg-vb"></a></dt>
