@@ -1,5 +1,10 @@
 # databraryr
 
+> **This repository has moved.** The canonical project is
+> [databrary/databraryr](https://github.com/databrary/databraryr). Use
+> that remote for new work. This NYU-Databrary copy is no longer the
+> source of truth.
+
 ## Overview
 
 databraryr is a wrapper for the [Databrary](https://databrary.org) data
